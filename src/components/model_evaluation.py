@@ -19,7 +19,7 @@ from dataclasses import dataclass
 @dataclass
 class EvaluateModelResponse:
     trained_model_f1_score :float
-    best_mdoel_f1_score: float
+    best_model_f1_score: float
     is_model_accepted :bool
     difference : float
 
@@ -100,7 +100,7 @@ class ModelEvaluation:
             x = self._rename_columns(x)
 
 
-            trained_model = load_object(file_path = self.model_trainer_artifact)  # model.pkl
+            trained_model = load_object(file_path = self.model_trainer_artifact.trained_model_file_path)  # model.pkl
             logging.info(" Trained model loaded/exist")
 
             trained_model_f1_score = self.model_trainer_artifact.metric_artifact.f1_score
@@ -118,7 +118,7 @@ class ModelEvaluation:
 
 
 
-            tmp_best_model_score = 0 if tmp_best_model_score is None else tmp_best_model_score
+            tmp_best_model_score = 0 if best_model_f1_score is None else best_model_f1_score
 
             result = EvaluateModelResponse(trained_model_f1_score=trained_model_f1_score,
                                            best_model_f1_score=best_model_f1_score,
